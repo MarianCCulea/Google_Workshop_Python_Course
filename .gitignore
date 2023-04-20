@@ -56,6 +56,7 @@ coverage.xml
 *.pot
 
 hidden/
+*.xlsx
 
 # Django stuff:
 *.log
