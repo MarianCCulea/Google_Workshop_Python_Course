@@ -1,11 +1,15 @@
-cuvant = 'onomatopee'.lower()
+import random
+from word_list import words as wordList
+
+cuvant = random.choice(wordList).lower()
+# cuvant = 'onomatopee'.lower()
 cuvant_initial = list(cuvant)
 """o _ o _ _ _ o _ e e"""
 """literele sunt lowercase"""
 """avem 7 incercari"""
 for index, value in enumerate(cuvant_initial):
     if cuvant_initial[0] != value and cuvant_initial[-1] != value:
-        cuvant_initial[index] = '_'
+        cuvant_initial[index] = "_"
 print(" ".join(cuvant_initial))
 numar_incercari = 0
 set_litere_incercate = set()
@@ -24,9 +28,11 @@ while numar_incercari <= 3:
         if numar_incercari == 3:
             print(f"Ai pierdut! Cuvantul initial era: {cuvant}")
             break
-        print(f"Mai ai {3 - numar_incercari} incercari. Ai incercat deja aceasta litera. "
-              f"Literele incercate sunt: {','.join(set_litere_incercate)}")
-    if '_' not in cuvant_initial:
+        print(
+            f"Mai ai {3 - numar_incercari} incercari. Ai incercat deja aceasta litera. "
+            f"Literele incercate sunt: {','.join(set_litere_incercate)}"
+        )
+    if "_" not in cuvant_initial:
         print("Ai castigat")
         break
 

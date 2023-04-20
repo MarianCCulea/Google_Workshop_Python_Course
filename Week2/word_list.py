@@ -1,0 +1,1 @@
+words = ["onomatopee", "alfabet", "abecedar"]
