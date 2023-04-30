@@ -1,0 +1,6 @@
+{"task": "Homework pyth", "date": "2023-05-01", "category": "lesson", "responsible": "Marian"}
+{"task": "Go to Denmark", "date": "2023-05-05", "category": "gifts", "responsible": "Marian"}
+{"task": "Do more sport", "date": "2023-05-05", "category": "groceries", "responsible": "Robert"}
+{"task": "HELLO", "date": "2023-05-06", "category": "bills", "responsible": "Robert"}
+{"task": "What is going on", "date": "2023-06-06", "category": "money", "responsible": "Sandra"}
+{"task": "Working", "date": "2023-07-07", "category": "work", "responsible": "Robert"}

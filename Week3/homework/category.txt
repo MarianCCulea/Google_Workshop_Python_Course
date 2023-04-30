@@ -1,0 +1,9 @@
+lesson
+groceries
+work
+gifts
+money
+bills
+cars
+maintanance
+coding
