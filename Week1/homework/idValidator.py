@@ -35,24 +35,50 @@ def check_id(CNP):
 
     # Check if the date is valid
     import datetime
+
     try:
         birth_date = datetime.date(full_year, month, day)
     except ValueError:
         return {"status": False, "error": "Birthday doesn't exist/not valid date!"}
 
     # Determine the month
-    month_names = ["January", "February", "March", "April", "May", "June",
-                   "July", "August", "September", "October", "November", "December"]
+    month_names = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ]
     month_name = month_names[month - 1]
 
     # Look up the place of birth in the dictionary
     birth_place = CNP[7:9]
     dictionary = {
-        'Alba': "01", 'Arad': "02", 'Arges': "03", 'Bacau': "04",
-        'Cluj': "12", 'Constanta': "13", 'Hunedoara': "20", 'Ialomita': "21"
+        "Alba": "01",
+        "Arad": "02",
+        "Arges": "03",
+        "Bacau": "04",
+        "Cluj": "12",
+        "Constanta": "13",
+        "Hunedoara": "20",
+        "Ialomita": "21",
+        "Bucuresti": "40",
+        "Bucuresti S.1": "41",
+        "Bucuresti S.2": "42",
+        "Bucuresti S.3": "43",
+        "Bucuresti S.4": "44",
+        "Bucuresti S.5": "45",
+        "Bucuresti S.6": "46",
     }
     if birth_place not in dictionary.values():
-        return {"status": False, "error": "Birth place is wrong"}
+        return {"status": False, "error": "Birth place does not exist"}
     for place, code in dictionary.items():
         if code == birth_place:
             birth_place = place
@@ -61,8 +87,8 @@ def check_id(CNP):
     # Calculate the control digit
     secret = "279146358279"
     total = 0
-    for i in range(len(CNP)-1):
-        total += int(CNP[i])*int(secret[i])
+    for i in range(len(CNP) - 1):
+        total += int(CNP[i]) * int(secret[i])
 
     if total % 11 == 10:
         control = 1
@@ -73,15 +99,24 @@ def check_id(CNP):
         return {"status": False, "error": "Control digit is wrong"}
 
     # Return the results as a dictionary
-    return {"status": True, "gender": gender, "year": full_year, "month": month_name, "day": day, "birth_date": birth_date, 'birth_place': birth_place}
+    return {
+        "status": True,
+        "gender": gender,
+        "year": full_year,
+        "month": month_name,
+        "day": day,
+        "birth_date": birth_date,
+        "birth_place": birth_place,
+    }
 
 
 # Print result
-result = check_id("5000327134151")
-if result['status']:
+cnp = input("Scrie CNP : ")
+result = check_id(cnp)
+if result["status"]:
     print(f"Gender: {result['gender']}")
     print(f"Birth date: {result['birth_date']}")
     print(f"Birth place: {result['birth_place']}")
     print(f"CNP is valid")
 else:
-    print(result['error'])
+    print(result["error"])
