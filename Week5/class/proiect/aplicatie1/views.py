@@ -1,10 +1,58 @@
-from django.shortcuts import render
-from django.views.generic import ListView
-from aplicatie1.models import Location
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.views.generic import ListView, CreateView, UpdateView
+from aplicatie1.models import Location, AuditLocation
 
 # Create your views here.
 
 
-class LocationView(ListView):
+class LocationView(LoginRequiredMixin, ListView):
     model = Location
     template_name = "aplicatie1/locations_index.html"
+    paginate_by = 5
+
+
+class CreateLocationView(LoginRequiredMixin, CreateView):
+    model = Location
+    fields = ["city", "country"]
+    template_name = "aplicatie1/locations_form.html"
+
+    def get_success_url(self):
+        return reverse("locations:lista_locatii")
+
+
+class UpdateLocationView(LoginRequiredMixin, UpdateView):
+    model = Location
+    fields = ["city", "country"]
+    template_name = "aplicatie1/locations_form.html"
+
+    def get_success_url(self):
+        return reverse("locations:lista_locatii")
+
+
+@login_required
+def delete_location(request, pk):
+    location_value = Location.objects.get(id=pk)
+    AuditLocation.objects.create(
+        location=location_value.id,
+        city=location_value.city,
+        country=location_value.country,
+        active=location_value.active,
+        user_id=request.user.id,
+    )
+    Location.objects.filter(id=pk).delete()
+    return redirect(f'/locations/?page={request.GET.get("page")}')
+
+
+@login_required
+def deactivate_location(request, pk):
+    Location.objects.filter(id=pk).update(active=0)
+    return redirect(f'/locations/?page={request.GET.get("page")}')
+
+
+@login_required
+def activate_location(request, pk):
+    Location.objects.filter(id=pk).update(active=1)
+    return redirect(f'/locations/?page={request.GET.get("page")}')
