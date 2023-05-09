@@ -1,20 +1,27 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView
 from aplicatie1.models import Location, AuditLocation
 
+
 # Create your views here.
-
-
 class LocationView(LoginRequiredMixin, ListView):
     model = Location
     template_name = "aplicatie1/locations_index.html"
     paginate_by = 5
+    queryset = model.objects.all().order_by("id")
+
+    def get_context_data(self, *args, **kwargs):
+        data = super().get_context_data()
+        data["page"] = (
+            self.request.GET.get("page") if self.request.GET.get("page") else 1
+        )
+        return data
 
 
-class CreateLocationView(LoginRequiredMixin, CreateView):
+class CreateLocationView(LoginRequiredMixin, PermissionRequireMixin, CreateView):
     model = Location
     fields = ["city", "country"]
     template_name = "aplicatie1/locations_form.html"
