@@ -21,7 +21,7 @@ class LocationView(LoginRequiredMixin, ListView):
         return data
 
 
-class CreateLocationView(LoginRequiredMixin, PermissionRequireMixin, CreateView):
+class CreateLocationView(LoginRequiredMixin, CreateView):
     model = Location
     fields = ["city", "country"]
     template_name = "aplicatie1/locations_form.html"
