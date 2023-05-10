@@ -20,3 +20,25 @@ class AuditLocation(models.Model):
 
     def __str__(self):
         return f"{self.country} -> {self.city}"
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=100)
+    website = models.CharField(max_length=100)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    active = models.BooleanField(default=1)
+
+    def __str__(self):
+        return f"{self.name} -> {self.website}"
+
+
+class AuditCompany(models.Model):
+    name = models.CharField(max_length=100)
+    website = models.CharField(max_length=100)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    active = models.BooleanField(default=1)
+    company = models.IntegerField()
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return f"{self.name} -> {self.website}"

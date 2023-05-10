@@ -10,4 +10,21 @@ urlpatterns = [
     path("<int:pk>/sterge/", views.delete_location, name="sterge"),
     path("<int:pk>/dezactiveaza", views.deactivate_location, name="dezactiveaza"),
     path("<int:pk>/activeaza/", views.activate_location, name="activeaza"),
+    #
+    path("companies/", views.CompanyView.as_view(), name="list_companies"),
+    path("company/add", views.CreateCompanyView.as_view(), name="add_company"),
+    path(
+        "company/<int:pk>/update/",
+        views.UpdateCompanyView.as_view(),
+        name="update_company",
+    ),
+    path("company/<int:pk>/sterge/", views.delete_company, name="delete_company"),
+    path(
+        "company/<int:pk>/dezactiveaza",
+        views.deactivate_company,
+        name="deactivate_company",
+    ),
+    path(
+        "company/<int:pk>/activeaza/", views.activate_company, name="activate_company"
+    ),
 ]
